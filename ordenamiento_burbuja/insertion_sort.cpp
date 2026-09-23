@@ -12,20 +12,41 @@ void mostrarArreglo(int numeros[], int n)
 
 void insertionSort(int numeros[], int n)
 {
+    int comparaciones = 0;
+    int desplazamientos = 0;
+
     for (int i = 1; i < n; i++)
     {
         int clave = numeros[i];
         int j = i - 1;
 
-        // Desplaza los elementos de numeros[0..i-1] que son mayores que la clave
-        // a una posición adelante de su posición actual
-        while (j >= 0 && numeros[j] > clave)
+        cout << "\nInsertando: " << clave << endl;
+
+        // Comparamos y desplazamos elementos
+        while (j >= 0)
         {
-            numeros[j + 1] = numeros[j];
-            j--;
+            comparaciones++;
+            if (numeros[j] > clave)
+            {
+                numeros[j + 1] = numeros[j]; // Desplazamiento
+                desplazamientos++;
+                j--;
+            }
+            else
+            {
+                break; // El elemento está en la posición correcta respecto a la parte ordenada
+            }
         }
-        numeros[j + 1] = clave;
+
+        numeros[j + 1] = clave; // Inserción del elemento
+        mostrarArreglo(numeros, n);
     }
+
+    cout << "\n========================================" << endl;
+    cout << "       ESTADISTICAS" << endl;
+    cout << "========================================" << endl;
+    cout << "Comparaciones: " << comparaciones << endl;
+    cout << "Desplazamientos: " << desplazamientos << endl;
 }
 
 int main()
@@ -36,11 +57,7 @@ int main()
     cout << "Arreglo original:" << endl;
     mostrarArreglo(numeros, n);
 
-    // Llamada al algoritmo de ordenamiento
     insertionSort(numeros, n);
-
-    cout << "Arreglo ordenado:" << endl;
-    mostrarArreglo(numeros, n);
 
     return 0;
 }
